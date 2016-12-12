@@ -1,6 +1,6 @@
 package edu.gsu.cis3270.project;
 
-public class Registration extends User {
+public class Registration {
 	
 	private String firstName;
 	private String lastName;
