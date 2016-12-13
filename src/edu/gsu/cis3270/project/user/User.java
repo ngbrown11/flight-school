@@ -1,25 +1,23 @@
 package edu.gsu.cis3270.project.user;
 
+import edu.gsu.cis3270.project.database.FlightDatabase;
+
 public abstract class User {
-	
+
 	private String firstName;
 	private String lastName;
 	private String address;
 	private int zipCode;
 	private String state;
 	private String email;
-	private int socialSecurity;
 	private String username;
 	private String password;
-	private char securityQuestion;
+	private int securityQuestion;
 	private String securityQuestionAnswer;
-	
+
 	/*
-	* 
+	*
 	* Methods for:
-	* Searching flight database for flights
-	* using various criteria
-	* 
 	* Book a flight and add it to the account,
 	* same flight cannot be booked multiple times
 	*
@@ -28,14 +26,33 @@ public abstract class User {
 	* Warn about conflicting flights when booking
 	* and restrict purchase
 	*
-	* Keep track of the number seats booked and 
+	* Keep track of the number seats booked and
 	* restrict booking after the flight is full
 	* */
 	
+	
+	//Create a new user and add to the database
+	/*static boolean registerUser(String firstName, String lastName, String address,
+	String state, int zipCode, String SSN, String email, String username, String password,
+	int securityQuestion, String securityQuestionAnswer) {
+		//Add code here
+		return true;
+	}*/
+
 	//Log the user in and send to next screen
 	protected abstract void login(String username, String password);
 	//Log the user out and send to the main screen
 	protected abstract void logout();
+
+	boolean bookFlight() {
+		//Add a flight to user account
+		return true;
+	}
+
+	boolean cancelFlight() {
+		//Delete a flight from user account
+		return true;
+	}
 
 	public String getUsername() {
 		return username;
@@ -45,7 +62,7 @@ public abstract class User {
 		return password;
 	}
 
-	public char getSecurityQuestion() {
+	public int getSecurityQuestion() {
 		return securityQuestion;
 	}
 
@@ -61,7 +78,7 @@ public abstract class User {
 		this.password = password;
 	}
 
-	public void setSecurityQuestion(char securityQuestion) {
+	public void setSecurityQuestion(int securityQuestion) {
 		this.securityQuestion = securityQuestion;
 	}
 
@@ -86,9 +103,7 @@ public abstract class User {
 	public String getEmail() {
 		return email;
 	}
-	public int getSocialSecurity() {
-		return socialSecurity;
-	}
+	abstract String getSSN();
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
@@ -107,9 +122,4 @@ public abstract class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	protected void setSocialSecurity(int socialSecurity) {
-		this.socialSecurity = socialSecurity;
-	}
-	
-	
 }
