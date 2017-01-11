@@ -11,6 +11,8 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 import java.awt.Color;
 import javax.swing.UIManager;
@@ -54,6 +56,22 @@ public class MainApplication extends JFrame {
 		splash.setForeground(UIManager.getColor("textHighlight"));
 		contentPane.add(splash, BorderLayout.CENTER);
 		splash.setFont(new Font("Californian FB", Font.BOLD, 52));;
+		
+		try {
+			Thread.sleep(4000);
+		} catch(Exception ex) {
+			// Create error message
+			JOptionPane.showMessageDialog(this,
+				    "Something went wrong while loading\nRestart the application",
+				    "Load error",
+				    JOptionPane.ERROR_MESSAGE);
+			
+		} finally { // Go to login screen after splash screen
+			this.getContentPane().remove(splash);
+			this.add(new LoginScreen());
+			this.getContentPane().invalidate();
+			this.getContentPane().validate();
+		}
 	}
 
 }
