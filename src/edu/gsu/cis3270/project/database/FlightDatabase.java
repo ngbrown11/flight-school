@@ -14,11 +14,15 @@ public class FlightDatabase {
 	 * SQL strings for prepared statements
 	 * 
 	 * */
-	static String selectsql = "SELECT CITY_FROM, CITY_TO, "
+	static String selectsql = "SELECT * "
+			+ "FROM FLIGHTS "
+			+ "WHERE CITY_FROM = ? AND CITY_TO = ? AND FLIGHT_DATE = ?"
+			+ "ORDER BY EXACT_TIME ASC;";
+	/*static String selectsql = "SELECT CITY_FROM, CITY_TO, "
 	+ "FLIGHT_DATE, EXACT_TIME, APPROX_TIME, SEATS_AVAILABLE "
 	+ "FROM FLIGHTS "
 	+ "WHERE CITY_FROM = ? AND CITY_TO = ? AND FLIGHT_DATE = ?"
-	+ "ORDER BY EXACT_TIME ASC;";
+	+ "ORDER BY EXACT_TIME ASC;";*/
 	
 	static String selectallsql = "SELECT * "
 			+ "FROM FLIGHTS "

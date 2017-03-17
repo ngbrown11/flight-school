@@ -16,6 +16,8 @@ import java.util.Vector;
 
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+
 import java.awt.BorderLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -76,11 +78,11 @@ public class MainScreen extends JFrame {
 				public void actionPerformed(ActionEvent arg0) {
 					
 					try {
-						String startDate=textField_2.getText();
-						SimpleDateFormat sdf1 = new SimpleDateFormat("mm-dd-yyyy");
+						String startDate=textField_2.getText().toString();
+						SimpleDateFormat sdf1 = new SimpleDateFormat("MM-dd-yyyy");
 						java.sql.Date sqlDate = new java.sql.Date(sdf1.parse(startDate).getTime());
-						ResultSet r = FlightDatabase.searchFlight(textField.getText().toUpperCase(),
-																	textField_1.getText().toUpperCase(),
+						ResultSet r = FlightDatabase.searchFlight(textField.getText().toString().toUpperCase(),
+																	textField_1.getText().toString().toUpperCase(),
 																	sqlDate);
 						
 						getContentPane().remove(list);
@@ -95,9 +97,12 @@ public class MainScreen extends JFrame {
 						getContentPane().validate();
 						
 					} catch (ParseException e) {
-						e.printStackTrace();
+						textField_2.setText("e:Wrong format");
 					} catch (SQLException e) {
-						e.printStackTrace();
+						JOptionPane.showInternalMessageDialog(panel, "An error occurred with the database."
+												+ "Please restart the application",
+												"Database Error",
+												ERROR);
 					}
 				}
 			});
