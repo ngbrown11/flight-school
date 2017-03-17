@@ -17,11 +17,17 @@ import com.jgoodies.forms.factories.DefaultComponentFactory;
 import java.awt.Color;
 import javax.swing.UIManager;
 import java.awt.SystemColor;
+import javax.swing.JButton;
+import javax.swing.SwingConstants;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.BoxLayout;
 
 public class MainApplication extends JFrame {
 
+	static MainApplication frame;
 	private JPanel contentPane;
-
+	private static JPanel screen;
 	/**
 	 * Launch the application.
 	 */
@@ -29,8 +35,11 @@ public class MainApplication extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainApplication frame = new MainApplication();
+					frame = new MainApplication();
+					frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 					frame.setVisible(true);
+					
+					switchScreens(screen);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -42,6 +51,10 @@ public class MainApplication extends JFrame {
 	 * Create the frame.
 	 */
 	public MainApplication() {
+		
+		LoginScreen login = new LoginScreen();
+		RegisterScreen register = new RegisterScreen();
+		
 		setTitle("Flight School Reservation System");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -54,24 +67,28 @@ public class MainApplication extends JFrame {
 		SplashMessage splash = new SplashMessage("FSRS v 1.0");
 		splash.setBackground(SystemColor.control);
 		splash.setForeground(UIManager.getColor("textHighlight"));
-		contentPane.add(splash, BorderLayout.CENTER);
-		splash.setFont(new Font("Californian FB", Font.BOLD, 52));;
+		switchScreens(splash);
+		contentPane.add(screen, BorderLayout.CENTER);
+		splash.setFont(new Font("Californian FB", Font.BOLD, 52));
 		
-		try {
-			Thread.sleep(4000);
-		} catch(Exception ex) {
-			// Create error message
-			JOptionPane.showMessageDialog(this,
-				    "Something went wrong while loading\nRestart the application",
-				    "Load error",
-				    JOptionPane.ERROR_MESSAGE);
-			
-		} finally { // Go to login screen after splash screen
-			this.getContentPane().remove(splash);
-			this.add(new LoginScreen());
-			this.getContentPane().invalidate();
-			this.getContentPane().validate();
-		}
+		JButton btnStart = new JButton("START");
+		btnStart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				getContentPane().remove(splash);
+				switchScreens(login);
+				getContentPane().add(screen);
+				getContentPane().invalidate();
+				getContentPane().validate();
+				pack();
+			}
+		});
+		splash.setLayout(new BorderLayout(0, 0));
+		btnStart.setVerticalAlignment(SwingConstants.BOTTOM);
+		splash.add(btnStart, BorderLayout.SOUTH);;
+	}
+	
+	public static void switchScreens(JPanel p) {
+		screen = p;
 	}
 
 }

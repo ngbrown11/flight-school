@@ -1,5 +1,9 @@
 package edu.gsu.cis3270.project.user;
 
+import java.sql.SQLException;
+
+import edu.gsu.cis3270.project.database.UserDatabase;
+
 public class Customer extends User {
 	
 	private final String SSN; //Initialize this variable in the constructor
@@ -19,12 +23,21 @@ public class Customer extends User {
 		this.setPassword(password);
 		this.setSecurityQuestion(securityQuestion);
 		this.setSecurityQuestionAnswer(securityQuestionAnswer);
+		try {
+			UserDatabase.createUser(firstName, lastName, address, zip, state, SSN, email, username, password, securityQuestion, securityQuestionAnswer, "C");
+		} catch (SQLException e) {
+			e.getMessage();
+		}
 	}
 
 	@Override
 	public void login(String username, String password) {
 		//Log the user in and send to next screen
-		
+		try {
+			UserDatabase.searchUser(username, password);
+		} catch (SQLException e) {
+			e.getMessage();
+		}
 	}
 
 	@Override

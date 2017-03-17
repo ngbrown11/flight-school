@@ -15,29 +15,8 @@ public abstract class User {
 	private int securityQuestion;
 	private String securityQuestionAnswer;
 
-	/*
-	*
-	* Methods for:
-	* Book a flight and add it to the account,
-	* same flight cannot be booked multiple times
-	*
-	* Delete a flight from the account
-	*
-	* Warn about conflicting flights when booking
-	* and restrict purchase
-	*
-	* Keep track of the number seats booked and
-	* restrict booking after the flight is full
-	* */
 	
-	
-	//Create a new user and add to the database
-	/*static boolean registerUser(String firstName, String lastName, String address,
-	String state, int zipCode, String SSN, String email, String username, String password,
-	int securityQuestion, String securityQuestionAnswer) {
-		//Add code here
-		return true;
-	}*/
+
 
 	//Log the user in and send to next screen
 	protected abstract void login(String username, String password);

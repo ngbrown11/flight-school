@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 
 import edu.gsu.cis3270.project.database.FlightDatabase;
+import edu.gsu.cis3270.project.database.UserDatabase;
 
 public class Admin extends User implements Administrator {
 	
@@ -24,6 +25,11 @@ public class Admin extends User implements Administrator {
 		this.setPassword(password);
 		this.setSecurityQuestion(securityQuestion);
 		this.setSecurityQuestionAnswer(securityQuestionAnswer);
+		try {
+			UserDatabase.createUser(firstName, lastName, address, zip, state, email, SSN, username, password, securityQuestion, securityQuestionAnswer, "A");
+		} catch (SQLException e) {
+			e.getMessage();
+		}
 	}
 
 	public boolean addFlight(String cityFrom, String cityTo, Date date, 

@@ -3,7 +3,7 @@ package edu.gsu.cis3270.project.database;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
-import java.time.LocalDate;
+import java.text.SimpleDateFormat;
 
 public class FlightDatabase {
 	
@@ -18,12 +18,16 @@ public class FlightDatabase {
 	+ "FLIGHT_DATE, EXACT_TIME, APPROX_TIME, SEATS_AVAILABLE "
 	+ "FROM FLIGHTS "
 	+ "WHERE CITY_FROM = ? AND CITY_TO = ? AND FLIGHT_DATE = ?"
-	+ "ORDER BY EXACT_TIME DESC;";
+	+ "ORDER BY EXACT_TIME ASC;";
+	
+	static String selectallsql = "SELECT * "
+			+ "FROM FLIGHTS "
+			+ "ORDER BY EXACT_TIME ASC;";
 	
 	static String insertsql = "INSERT INTO FLIGHTS "
 	+"(CITY_FROM, CITY_TO, FLIGHT_DATE, EXACT_TIME, APPROX_TIME, "
-	+"SEATS_AVAILABLE)"
-	+"VALUES (?, ?, ?, ?, ?, ?);";
+	+"SEATS_AVAILABLE, SEATS_BOOKED)"
+	+"VALUES (?, ?, ?, ?, ?, ?, ?);";
 	
 	static String updatesql = "UPDATE FLIGHTS "
 	+ "SET CITY_FROM=?, CITY_TO=?, FLIGHT_DATE=?, EXACT_TIME=?, APPROX_TIME=?, "
@@ -36,6 +40,7 @@ public class FlightDatabase {
 	private static final String USER = "root";
 	private static final String PASS = "George18";
 	static Connection conn = null;
+	static Statement selectall = null;
 	static PreparedStatement select = null;
 	static PreparedStatement insert = null;
 	static PreparedStatement update = null;
@@ -45,6 +50,7 @@ public class FlightDatabase {
 		// Define each prepared statement
 		try {
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			selectall = conn.createStatement();
 			select = conn.prepareStatement(selectsql);
 			insert = conn.prepareStatement(insertsql);
 			update = conn.prepareStatement(updatesql);
@@ -64,6 +70,14 @@ public class FlightDatabase {
 		ResultSet results = select.executeQuery();
 		return results;
 	}
+	
+	// Show all flights
+	public static ResultSet searchAll() throws SQLException {
+		
+		ResultSet results = selectall.executeQuery(selectallsql);
+		return results;
+	}
+	
 	// Create a new flight using insert statement
 	public static void createFlight(String cityFrom, String cityTo, Date date, 
 			String exactTime, String timeOfDay, int seatsAvailable) throws SQLException {
@@ -74,6 +88,7 @@ public class FlightDatabase {
 		insert.setString(4, exactTime);
 		insert.setString(5, timeOfDay);
 		insert.setInt(6, seatsAvailable);
+		insert.setInt(7, 0);
 		insert.execute();
 	}
 	
