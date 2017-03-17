@@ -143,6 +143,7 @@ public class MainScreen extends JFrame {
 			btnLogout.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					dispose();
+					MainApplication.main(new String[0]);
 				}
 			});
 			
