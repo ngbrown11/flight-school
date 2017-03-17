@@ -53,7 +53,6 @@ public class MainApplication extends JFrame {
 	public MainApplication() {
 		
 		LoginScreen login = new LoginScreen();
-		RegisterScreen register = new RegisterScreen();
 		
 		setTitle("Flight School Reservation System");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,8 +62,11 @@ public class MainApplication extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
+		contentPane.add(login, BorderLayout.CENTER);
+		pack();
+		
 		// Create splash screen message
-		SplashMessage splash = new SplashMessage("FSRS v 1.0");
+		/*SplashMessage splash = new SplashMessage("FSRS v 1.0");
 		splash.setBackground(SystemColor.control);
 		splash.setForeground(UIManager.getColor("textHighlight"));
 		switchScreens(splash);
@@ -84,7 +86,7 @@ public class MainApplication extends JFrame {
 		});
 		splash.setLayout(new BorderLayout(0, 0));
 		btnStart.setVerticalAlignment(SwingConstants.BOTTOM);
-		splash.add(btnStart, BorderLayout.SOUTH);;
+		splash.add(btnStart, BorderLayout.SOUTH);*/
 	}
 	
 	public static void switchScreens(JPanel p) {
